@@ -55,15 +55,4 @@ public class TabChanger extends Fragment
 
         Log.d("test", "Adapter should have been set by now!");
     }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        Log.d("test", "RESUME LIST");
-        //adapter.notifyDataSetChanged();
-        //pager.setAdapter(adapter);
-        //tabs.setViewPager(pager);
-
-    }
 }

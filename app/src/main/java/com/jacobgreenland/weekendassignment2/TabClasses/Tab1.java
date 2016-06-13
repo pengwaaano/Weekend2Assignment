@@ -36,4 +36,17 @@ public class Tab1 extends Fragment {
         comm.afterViewsCreated(1);
         Log.d("test", "Adapter should have been set by now!");
     }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Log.d("test", "RESUME LIST");
+        comm.setRView(rv, 1);
+        comm.afterViewsCreated(1);
+        //adapter.notifyDataSetChanged();
+        //pager.setAdapter(adapter);
+        //tabs.setViewPager(pager);
+
+    }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,5 +38,17 @@ public class Tab2 extends Fragment {
         comm.afterViewsCreated(2);
         //comm.afterViewsCreated();
         //comm = (Communicator) getActivity();
+    }
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Log.d("test", "RESUME LIST");
+        comm.setRView(rv, 2);
+        comm.afterViewsCreated(2);
+        //adapter.notifyDataSetChanged();
+        //pager.setAdapter(adapter);
+        //tabs.setViewPager(pager);
+
     }
 }

@@ -72,7 +72,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                     _api = Services._createItemAPI();
                     pattern(view);
 
-
                     Toast.makeText(mContext, "#" + position + " - " + listing.getName(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -171,6 +170,5 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             clickListener.onClick(view, getPosition());
             return true;
         }
-
     }
 }
