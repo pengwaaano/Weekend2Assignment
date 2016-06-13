@@ -105,7 +105,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                         Log.i("Retrofit", "onNext");
                         MainActivity.detailsList = productsList.getDetails();
                         hidePDialog();
-
                     }
                 }));
     }

@@ -26,6 +26,7 @@ import com.jacobgreenland.weekendassignment2.adapter.ProductAdapter;
 import com.jacobgreenland.weekendassignment2.model.Details;
 import com.jacobgreenland.weekendassignment2.model.Listing;
 import com.jacobgreenland.weekendassignment2.model.ProductDetails;
+import com.jacobgreenland.weekendassignment2.services.Services;
 import com.jacobgreenland.weekendassignment2.utilities.Communicator;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
@@ -67,15 +68,23 @@ public class MainActivity extends AppCompatActivity implements Communicator{
     Button addToBagButton;
 
     ImageView backButton;
+    ImageView bagButton;
     public static ArrayList<ProductDetails> productsInBag = new ArrayList<>();
 
     public static OkHttpClient okHttpClient;
+    public static long HTTP_CACHE_SIZE = 10 * 1024 * 1024;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
+        try {
+            Services.run();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
 
@@ -86,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements Communicator{
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //Set OnClick for shopping
-        ImageView bagButton = (ImageView) findViewById(R.id.bagButton);
+        bagButton = (ImageView) findViewById(R.id.bagButton);
         bagButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,14 +119,16 @@ public class MainActivity extends AppCompatActivity implements Communicator{
                 onBackPressed();
             }
         });
-        //Set starting fragmnet to Tabs
+        //Set starting fragment to Tabs
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         TabChanger tabChange = new TabChanger();
-        ft.addToBackStack(null);
+        //ft.addToBackStack(null);
         ft.replace(R.id.mainFrameLayout, tabChange, "tabs");
         ft.commit();
     }
+
+
 
     @Override
     public void restartFragment()
@@ -136,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements Communicator{
         Log.d("test", " " + count);
         if (count == 0) {
             Log.d("test", "Restart the damn fragment");
-            restartFragment();
+            //restartFragment();
             super.onBackPressed();
             //additional code
         } else {

@@ -2,6 +2,7 @@ package com.jacobgreenland.weekendassignment2;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -12,7 +13,11 @@ import android.widget.ProgressBar;
 import com.jacobgreenland.weekendassignment2.model.Category;
 import com.jacobgreenland.weekendassignment2.observables.IItemAPI;
 import com.jacobgreenland.weekendassignment2.services.Services;
+import com.squareup.okhttp.Cache;
+import com.squareup.okhttp.OkHttpClient;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observer;
@@ -37,6 +42,17 @@ public class SplashScreen extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splashscreen);
 
+        MainActivity.okHttpClient = new OkHttpClient();
+        Cache cache = null;
+        if(cache == null) {
+            cache = createHttpClientCache(this);
+        }
+        MainActivity.okHttpClient.setCache(cache);
+
+        if (MainActivity.okHttpClient.getCache() != null)
+        {
+            Log.d("Test", "Somethings cached");
+        }
 
         pb = (ProgressBar) findViewById(R.id.splashProgress);
 
@@ -44,6 +60,17 @@ public class SplashScreen extends AppCompatActivity
         pattern();
 
     }
+
+    public static Cache createHttpClientCache(Context context) {
+        try {
+            File cacheDir = context.getDir("service_api_cache", Context.MODE_PRIVATE);
+            return new Cache(cacheDir, MainActivity.HTTP_CACHE_SIZE);
+        } catch (IOException e) {
+            Log.e("TAG", "Couldn't create http cache because of IO problem.", e);
+            return null;
+        }
+    }
+
     public void pattern(){
     // load in Women Category
         _subscriptions.add(_api.getWomensCategory()
