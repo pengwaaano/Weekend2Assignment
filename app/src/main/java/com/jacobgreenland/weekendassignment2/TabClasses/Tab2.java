@@ -19,13 +19,13 @@ public class Tab2 extends Fragment {
 
     Communicator comm;
     RecyclerView rv;
+    View v;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.tab_2,container,false);
+        v = inflater.inflate(R.layout.tab_2,container,false);
         comm = (Communicator) getActivity();
         rv = (RecyclerView) v.findViewById(R.id.tab2List);
         //comm.setRView(rv, 2);
-
         return v;
     }
 
@@ -44,6 +44,7 @@ public class Tab2 extends Fragment {
     {
         super.onResume();
         Log.d("test", "RESUME LIST");
+        rv = (RecyclerView) v.findViewById(R.id.tab2List);
         comm.setRView(rv, 2);
         comm.afterViewsCreated(2);
         //adapter.notifyDataSetChanged();

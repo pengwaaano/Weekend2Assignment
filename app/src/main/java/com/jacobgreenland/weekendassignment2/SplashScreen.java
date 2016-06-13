@@ -91,6 +91,7 @@ public class SplashScreen extends AppCompatActivity
                         //myInstance.dismiss();
                         Intent intent = new Intent(SplashScreen.this, MainActivity.class);
                         startActivity(intent);
+                        finish();
                         //pb.setVisibility(View.GONE);
                     }
                     @Override

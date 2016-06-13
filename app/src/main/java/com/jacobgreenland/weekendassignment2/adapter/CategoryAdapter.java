@@ -69,13 +69,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                     //Chosen category to pass to the API
                     MainActivity.chosenCategory = listing.getCategoryId();
                     //Create API
+
                     _api = Services._createItemAPI();
                     pattern(view);
 
                     Toast.makeText(mContext, "#" + position + " - " + listing.getName(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     public void pattern(final View view)

@@ -19,9 +19,10 @@ public class Tab1 extends Fragment {
 
     Communicator comm;
     RecyclerView rv;
+    View v;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v =inflater.inflate(R.layout.tab_1,container,false);
+        v =inflater.inflate(R.layout.tab_1,container,false);
         comm = (Communicator) getActivity();
         rv = (RecyclerView) v.findViewById(R.id.tab1List);
 
@@ -42,6 +43,7 @@ public class Tab1 extends Fragment {
     {
         super.onResume();
         Log.d("test", "RESUME LIST");
+        rv = (RecyclerView) v.findViewById(R.id.tab1List);
         comm.setRView(rv, 1);
         comm.afterViewsCreated(1);
         //adapter.notifyDataSetChanged();

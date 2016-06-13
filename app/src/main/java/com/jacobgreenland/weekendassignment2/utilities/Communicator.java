@@ -13,4 +13,5 @@ public interface Communicator {
     public void afterViewsCreated(int i);
     public void setUI(ViewPager vp, TextView name, TextView price, TextView description, Button add);
     public void displayInformation();
+    public void restartFragment();
 }

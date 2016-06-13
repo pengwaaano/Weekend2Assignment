@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -28,7 +27,11 @@ import com.jacobgreenland.weekendassignment2.model.Details;
 import com.jacobgreenland.weekendassignment2.model.Listing;
 import com.jacobgreenland.weekendassignment2.model.ProductDetails;
 import com.jacobgreenland.weekendassignment2.utilities.Communicator;
+import com.squareup.okhttp.Cache;
+import com.squareup.okhttp.OkHttpClient;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,8 +66,10 @@ public class MainActivity extends AppCompatActivity implements Communicator{
     TextView detailsDescription;
     Button addToBagButton;
 
+    ImageView backButton;
     public static ArrayList<ProductDetails> productsInBag = new ArrayList<>();
 
+    public static OkHttpClient okHttpClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements Communicator{
             }
         });
         //Set OnClick for back button
-        ImageView backButton = (ImageView) findViewById(R.id.home);
+        backButton = (ImageView) findViewById(R.id.home);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,33 +114,44 @@ public class MainActivity extends AppCompatActivity implements Communicator{
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         TabChanger tabChange = new TabChanger();
+        ft.addToBackStack(null);
         ft.replace(R.id.mainFrameLayout, tabChange, "tabs");
-        //String ID = view.findViewById(R.id.invisibutton).getTag().toString();
         ft.commit();
     }
 
     @Override
+    public void restartFragment()
+    {
+        /*FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        TabChanger tabChange = new TabChanger();
+        ft.replace(R.id.mainFrameLayout, tabChange, "tabs");*/
+        afterViewsCreated(1);
+        afterViewsCreated(2);
+    }
+    @Override
     public void onBackPressed() {
 
         int count = getFragmentManager().getBackStackEntryCount();
-
+        Log.d("test", " " + count);
         if (count == 0) {
+            Log.d("test", "Restart the damn fragment");
+            restartFragment();
             super.onBackPressed();
             //additional code
         } else {
             getFragmentManager().popBackStack();
         }
-
     }
 
     public void switchContent(int id, Fragment fragment, View view) {
         //Switch Fragments method
         Log.d("Test", "Fragment changed!");
+
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.replace(id, fragment, fragment.toString());
             ft.addToBackStack(null);
-            //String ID = view.findViewById(R.id.invisibutton).getTag().toString();
             ft.commit();
         }
 
@@ -158,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements Communicator{
             return true;
         }
         if (id == R.id.home) {
-            NavUtils.navigateUpFromSameTask(MainActivity.this);
+            //NavUtils.navigateUpFromSameTask(MainActivity.this);
         }
         /*if(id)
         {
@@ -253,5 +269,23 @@ public class MainActivity extends AppCompatActivity implements Communicator{
         Log.d("test", " " + s);
         ImageViewPagerAdapter iAdapter = new ImageViewPagerAdapter(MainActivity.this,productDetails.getProductImageUrls());
         detailsViewPager.setAdapter(iAdapter);
+    }
+
+    public void setUpHTTPClient()
+    {
+        File httpCacheDirectory = new File(getCacheDir(), "responses");
+
+        Cache cache = null;
+        try {
+            cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
+        } catch (IOException e) {
+            Log.e("OKHttp", "Could not create http cache", e);
+        }
+
+        okHttpClient = new OkHttpClient();
+        if (cache != null) {
+            okHttpClient.setCache(cache);
+        }
+
     }
 }

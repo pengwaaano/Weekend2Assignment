@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.jacobgreenland.weekendassignment2.TabClasses.SlidingTabLayout;
 import com.jacobgreenland.weekendassignment2.TabClasses.ViewPagerAdapter;
+import com.jacobgreenland.weekendassignment2.utilities.Communicator;
 
 /**
  * Created by Jacob on 11/06/16.
@@ -22,10 +23,13 @@ public class TabChanger extends Fragment
     SlidingTabLayout tabs;
     CharSequence Titles[]={"Shop Women","Shop Men"};
     int Numboftabs =2;
+    Communicator comm;
     View v;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v =inflater.inflate(R.layout.tab_changer,container,false);
+
         return v;
     }
     @Override
@@ -33,9 +37,10 @@ public class TabChanger extends Fragment
         // TODO Auto-generated method stub
         super.onActivityCreated(savedInstanceState);
         getActivity().getFragmentManager();
+        comm = (Communicator) getActivity();
 
         //set adapters and pagers for the Tab Screen
-        adapter =  new ViewPagerAdapter(getFragmentManager(),Titles,Numboftabs);
+        adapter =  new ViewPagerAdapter(getChildFragmentManager(),Titles,Numboftabs);
         pager = (ViewPager) v.findViewById(R.id.pager);
         pager.setAdapter(adapter);
 
@@ -54,5 +59,19 @@ public class TabChanger extends Fragment
 
 
         Log.d("test", "Adapter should have been set by now!");
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Log.d("test", "tabs have been resumed");
+
+        //adapter =  new ViewPagerAdapter(getFragmentManager(),Titles,Numboftabs);
+        //pager.setAdapter(adapter);
+
+        //comm.restartFragment();
+        //adapter.notifyDataSetChanged();
+        //tabs.setViewPager(pager);
     }
 }
