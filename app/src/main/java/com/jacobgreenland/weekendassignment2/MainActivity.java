@@ -128,18 +128,6 @@ public class MainActivity extends AppCompatActivity implements Communicator{
         ft.commit();
     }
 
-
-
-    @Override
-    public void restartFragment()
-    {
-        /*FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        TabChanger tabChange = new TabChanger();
-        ft.replace(R.id.mainFrameLayout, tabChange, "tabs");*/
-        afterViewsCreated(1);
-        afterViewsCreated(2);
-    }
     @Override
     public void onBackPressed() {
 
