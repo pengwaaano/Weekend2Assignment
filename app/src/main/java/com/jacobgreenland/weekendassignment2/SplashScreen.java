@@ -1,11 +1,9 @@
 package com.jacobgreenland.weekendassignment2;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ProgressBar;
@@ -34,7 +32,6 @@ public class SplashScreen extends AppCompatActivity
     private IItemAPI _api;
     private CompositeSubscription _subscriptions = new CompositeSubscription();
     private ProgressDialog pDialog;
-    MySpinnerDialog myInstance;
     ProgressBar pb;
 
     @Override
@@ -59,7 +56,6 @@ public class SplashScreen extends AppCompatActivity
 
         _api = Services._createItemAPI();
         pattern();
-
     }
 
     public static Cache createHttpClientCache(Context context) {
@@ -81,12 +77,10 @@ public class SplashScreen extends AppCompatActivity
         } catch (IOException e) {
             Log.e("OKHttp", "Could not create http cache", e);
         }
-
         MainActivity.okHttpClient = new OkHttpClient();
         if (cache != null) {
             MainActivity.okHttpClient.setCache(cache);
         }
-
     }
 
     public void pattern(){
@@ -158,26 +152,6 @@ public class SplashScreen extends AppCompatActivity
         if (pDialog != null) {
             pDialog.dismiss();
             pDialog = null;
-        }
-    }
-
-    public static class MySpinnerDialog extends DialogFragment {
-
-        private ProgressDialog pDialog;
-        public MySpinnerDialog() {
-            // use empty constructors. If something is needed use onCreate's
-        }
-
-        @Override
-        public Dialog onCreateDialog(final Bundle savedInstanceState) {
-
-            pDialog = new ProgressDialog(getActivity());
-            this.setStyle(STYLE_NO_TITLE, getTheme()); // You can use styles or inflate a view
-            pDialog.setMessage("Spinning.."); // set your messages if not inflated from XML
-
-            pDialog.setCancelable(false);
-
-            return pDialog;
         }
     }
 }
