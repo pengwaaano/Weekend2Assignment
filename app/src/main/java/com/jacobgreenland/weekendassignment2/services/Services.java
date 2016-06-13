@@ -10,6 +10,7 @@ import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 
@@ -20,9 +21,19 @@ public class Services {
 
     // -----------------------------------------------------------------------------------
     public static IItemAPI _createItemAPI() {
+
+        RequestInterceptor requestInterceptor = new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                request.addHeader("User-Agent", "Your-App-Name");
+                request.addHeader("Accept", "application/vnd.yourapi.v1.full+json");
+            }
+        };
+
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(Constants.BASE_URL)
                 .setClient(new OkClient(MainActivity.okHttpClient))
+                .setRequestInterceptor(requestInterceptor)
                 .setLogLevel(RestAdapter.LogLevel.FULL);
         return builder.build().create(IItemAPI.class);
     }

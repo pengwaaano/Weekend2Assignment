@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements Communicator{
             Services.run();
         } catch (Exception e) {
             e.printStackTrace();
+            Log.d("test", "error");
         }
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);

@@ -63,7 +63,7 @@ public class SplashScreen extends AppCompatActivity
 
     public static Cache createHttpClientCache(Context context) {
         try {
-            File cacheDir = context.getDir("service_api_cache", Context.MODE_PRIVATE);
+            File cacheDir = context.getCacheDir();
             return new Cache(cacheDir, MainActivity.HTTP_CACHE_SIZE);
         } catch (IOException e) {
             Log.e("TAG", "Couldn't create http cache because of IO problem.", e);
