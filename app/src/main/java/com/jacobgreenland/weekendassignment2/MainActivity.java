@@ -271,21 +271,5 @@ public class MainActivity extends AppCompatActivity implements Communicator{
         detailsViewPager.setAdapter(iAdapter);
     }
 
-    public void setUpHTTPClient()
-    {
-        File httpCacheDirectory = new File(getCacheDir(), "responses");
 
-        Cache cache = null;
-        try {
-            cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
-        } catch (IOException e) {
-            Log.e("OKHttp", "Could not create http cache", e);
-        }
-
-        okHttpClient = new OkHttpClient();
-        if (cache != null) {
-            okHttpClient.setCache(cache);
-        }
-
-    }
 }

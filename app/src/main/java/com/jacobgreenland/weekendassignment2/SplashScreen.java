@@ -43,7 +43,7 @@ public class SplashScreen extends AppCompatActivity
         setContentView(R.layout.splashscreen);
 
         MainActivity.okHttpClient = new OkHttpClient();
-        Cache cache = null;
+        /*Cache cache = null;
         if(cache == null) {
             cache = createHttpClientCache(this);
         }
@@ -52,7 +52,8 @@ public class SplashScreen extends AppCompatActivity
         if (MainActivity.okHttpClient.getCache() != null)
         {
             Log.d("Test", "Somethings cached");
-        }
+        }*/
+        setUpHTTPClient();
 
         pb = (ProgressBar) findViewById(R.id.splashProgress);
 
@@ -69,6 +70,23 @@ public class SplashScreen extends AppCompatActivity
             Log.e("TAG", "Couldn't create http cache because of IO problem.", e);
             return null;
         }
+    }
+    public void setUpHTTPClient()
+    {
+        File httpCacheDirectory = new File(getCacheDir(), "responses");
+
+        Cache cache = null;
+        try {
+            cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
+        } catch (IOException e) {
+            Log.e("OKHttp", "Could not create http cache", e);
+        }
+
+        MainActivity.okHttpClient = new OkHttpClient();
+        if (cache != null) {
+            MainActivity.okHttpClient.setCache(cache);
+        }
+
     }
 
     public void pattern(){
