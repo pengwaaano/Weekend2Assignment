@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Name"
+        android:id="@+id/bs_name"
+        android:paddingLeft="@dimen/_10sdp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Price"
+        android:id="@+id/bs_Price"
+        android:layout_gravity="right"
+        android:paddingRight="@dimen/_10sdp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:id="@+id/editText"
+        android:layout_weight="0.03"
+        android:clickable="false"
+        android:inputType="none"/>
+</LinearLayout>
