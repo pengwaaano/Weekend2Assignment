@@ -1,4 +1,4 @@
-package com.jacobgreenland.weekendassignment2.TabClasses;
+package com.jacobgreenland.weekendassignment2.tabclasses;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,44 +12,41 @@ import android.view.ViewGroup;
 import com.jacobgreenland.weekendassignment2.R;
 import com.jacobgreenland.weekendassignment2.utilities.Communicator;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * Created by Edwin on 15/02/2015.
  */
-public class Tab2 extends Fragment {
+public class Tab1 extends Fragment {
 
     Communicator comm;
-    RecyclerView rv;
+    @BindView(R.id.tab1List) RecyclerView rv;
     View v;
+    private Unbinder unbinder;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.tab_2,container,false);
+        v =inflater.inflate(R.layout.tab_1,container,false);
+        ButterKnife.bind(this,v);
         comm = (Communicator) getActivity();
-        rv = (RecyclerView) v.findViewById(R.id.tab2List);
-        //comm.setRView(rv, 2);
+        //rv = (RecyclerView) v.findViewById(R.id.tab1List);
+
         return v;
     }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onActivityCreated(savedInstanceState);
         comm = (Communicator) getActivity();
-        comm.setRView(rv, 2);
-        comm.afterViewsCreated(2);
-        //comm.afterViewsCreated();
-        //comm = (Communicator) getActivity();
+        comm.setRView(rv, 1);
+        comm.afterViewsCreated(1);
+        Log.d("test", "Adapter should have been set by now!");
     }
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        Log.d("test", "RESUME LIST");
-        rv = (RecyclerView) v.findViewById(R.id.tab2List);
-        comm.setRView(rv, 2);
-        comm.afterViewsCreated(2);
-        //adapter.notifyDataSetChanged();
-        //pager.setAdapter(adapter);
-        //tabs.setViewPager(pager);
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        //unbinder.unbind();
     }
 }

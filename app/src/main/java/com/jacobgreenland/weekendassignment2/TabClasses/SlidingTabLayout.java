@@ -1,4 +1,4 @@
-package com.jacobgreenland.weekendassignment2.TabClasses;
+package com.jacobgreenland.weekendassignment2.tabclasses;
 
 import android.content.Context;
 import android.graphics.Typeface;

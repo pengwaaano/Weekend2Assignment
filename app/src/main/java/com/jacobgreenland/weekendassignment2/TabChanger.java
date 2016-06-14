@@ -9,42 +9,47 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jacobgreenland.weekendassignment2.TabClasses.SlidingTabLayout;
-import com.jacobgreenland.weekendassignment2.TabClasses.ViewPagerAdapter;
+import com.jacobgreenland.weekendassignment2.tabclasses.SlidingTabLayout;
+import com.jacobgreenland.weekendassignment2.tabclasses.ViewPagerAdapter;
 import com.jacobgreenland.weekendassignment2.utilities.Communicator;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by Jacob on 11/06/16.
  */
 public class TabChanger extends Fragment
 {
-    ViewPager pager;
+    @BindView(R.id.pager) ViewPager pager;
     ViewPagerAdapter adapter;
-    SlidingTabLayout tabs;
+    @BindView(R.id.tabs) SlidingTabLayout tabs;
     CharSequence Titles[]={"Shop Women","Shop Men"};
     int Numboftabs =2;
     Communicator comm;
     View v;
+    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v =inflater.inflate(R.layout.tab_changer,container,false);
-
+        unbinder = ButterKnife.bind(this,v);
         return v;
     }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onActivityCreated(savedInstanceState);
-        getActivity().getFragmentManager();
+        //getActivity().getFragmentManager();
         comm = (Communicator) getActivity();
 
         //set adapters and pagers for the Tab Screen
         adapter =  new ViewPagerAdapter(getChildFragmentManager(),Titles,Numboftabs);
-        pager = (ViewPager) v.findViewById(R.id.pager);
+        //pager = (ViewPager) v.findViewById(R.id.pager);
         pager.setAdapter(adapter);
 
-        tabs = (SlidingTabLayout) v.findViewById(R.id.tabs);
+        //tabs = (SlidingTabLayout) v.findViewById(R.id.tabs);
         tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
 
         // Setting Custom Color for the Scroll bar indicator of the Tab View
@@ -62,16 +67,8 @@ public class TabChanger extends Fragment
     }
 
     @Override
-    public void onResume()
-    {
-        super.onResume();
-        Log.d("test", "tabs have been resumed");
-
-        //adapter =  new ViewPagerAdapter(getFragmentManager(),Titles,Numboftabs);
-        //pager.setAdapter(adapter);
-
-        //comm.restartFragment();
-        //adapter.notifyDataSetChanged();
-        //tabs.setViewPager(pager);
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }
